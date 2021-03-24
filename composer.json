@@ -1,0 +1,23 @@
+{
+    "name": "bader.ali/node-test",
+    "authors": [
+        {
+            "name": "Bader Ali",
+            "email": "bader.ali@isaac.nl"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "ssh://git@gitlab.isaac.local/study/php-chapter/real-time-ui-updates/gazephp.git"
+        },
+        {
+            "type": "vcs",
+            "url": "ssh://git@gitlab.isaac.local/study/php-chapter/real-time-ui-updates/gazehub.git"
+        }
+    ],    
+    "require": {
+        "isaac/gaze" : "dev-master",
+        "isaac/gazehub" : "dev-master"
+    }
+}

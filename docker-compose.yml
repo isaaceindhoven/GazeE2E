@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  client:
+    image: httpd:2
+    ports:
+      - 8000:80
+    volumes:
+      - ./client:/usr/local/apache2/htdocs
+      - ./node_modules/@study/gazejs/dist:/usr/local/apache2/htdocs/js
+  server:
+    image: php:${PHP_VER:-7.3}-apache
+    ports:
+      - 8001:80
+    volumes:
+      - ./server:/var/www/html/
+      - ./vendor:/var/www/html/vendor/
+      - ./private.key:/var/www/html/private.key
+  hub:
+    image: php:${PHP_VER:-7.3}-cli
+    ports:
+      - 3333:3333
+    volumes:
+      - ./vendor/:/vendor
+      - ./public.key:/vendor/isaac/gazehub/public.key
+    environment:
+      - GAZEHUB_LOG_LEVEL=10
+    command: "/vendor/isaac/gazehub/gazehub"

@@ -1,0 +1,5 @@
+# Test report generation
+tests/e2e/allure
+tests/e2e/screenshots
+/node_modules
+/vendor

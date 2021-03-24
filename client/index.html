@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/js/GazeJs.js"></script>
+</head>
+<body>
+
+    <script>
+        let gaze = null;
+        let subscription = null;
+
+        let topics = [];
+
+        async function init(roles = []){
+            gaze = await new GazeJs("http://localhost:3333", "http://localhost:8001/token.php?roles=" + JSON.stringify(roles)).connect();
+            subscription = await gaze.on(() => topics, payload => document.body.innerHTML += `<div>${JSON.stringify(payload)}</div>`);
+        }
+
+        function update(newTopics){
+            topics = newTopics;
+            subscription.update();
+        }
+    </script>
+    
+</body>
+</html>

@@ -11,20 +11,19 @@
 
     <h1>Client Page</h1>
 
+    <div id="received"></div>
+
     <script>
-        window.gaze = null;
-        window.subscription = null;
-        window.topics = [];
+        let gaze = null;
+
+        function printToDom(p){
+            document.querySelector("#received").innerHTML += `${JSON.stringify(p)}`;
+        }
 
         async function init(roles = []){
-            window.gaze = await new GazeJs("http://localhost:3333", "http://localhost:8001/token.php?roles=" + JSON.stringify(roles)).connect();
-            window.subscription = await window.gaze.on(() => window.topics, payload => document.body.innerHTML += `${JSON.stringify(payload)}`);
+            gaze = await new GazeJs("http://localhost:3333", "http://localhost:8001/token.php?roles=" + JSON.stringify(roles)).connect();
         }
-
-        async function update(newTopics){
-            window.topics = newTopics;
-            await window.subscription.update();
-        }
+        
     </script>
     
 </body>

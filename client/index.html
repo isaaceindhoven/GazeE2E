@@ -9,20 +9,21 @@
 </head>
 <body>
 
-    <script>
-        let gaze = null;
-        let subscription = null;
+    <h1>Client Page</h1>
 
-        let topics = [];
+    <script>
+        window.gaze = null;
+        window.subscription = null;
+        window.topics = [];
 
         async function init(roles = []){
-            gaze = await new GazeJs("http://localhost:3333", "http://localhost:8001/token.php?roles=" + JSON.stringify(roles)).connect();
-            subscription = await gaze.on(() => topics, payload => document.body.innerHTML += `<div>${JSON.stringify(payload)}</div>`);
+            window.gaze = await new GazeJs("http://localhost:3333", "http://localhost:8001/token.php?roles=" + JSON.stringify(roles)).connect();
+            window.subscription = await window.gaze.on(() => window.topics, payload => document.body.innerHTML += `${JSON.stringify(payload)}`);
         }
 
-        function update(newTopics){
-            topics = newTopics;
-            subscription.update();
+        async function update(newTopics){
+            window.topics = newTopics;
+            await window.subscription.update();
         }
     </script>
     

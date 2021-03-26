@@ -24,5 +24,6 @@ services:
       - ./vendor/:/vendor
       - ./public.key:/vendor/isaac/gazehub/public.key
     environment:
+      - GAZEHUB_JWT_PUBLIC_KEY=/vendor/isaac/gazehub/public.key
       - GAZEHUB_LOG_LEVEL=10
-    command: "/vendor/isaac/gazehub/gazehub"
+    command: "/vendor/isaac/gazehub/gazehub.phar"

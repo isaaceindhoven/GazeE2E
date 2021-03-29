@@ -131,5 +131,35 @@ for(let browserType of ['chromium', 'firefox', 'webkit']){
             await page.expectIncludesPayload({"name" : "kevin"}, false);
         });
 
+        test('if subscription is made with empty values', async () => {
+            await page.evaluate(async () => {
+                await init();
+                await gaze.on(() => ["", null, undefined], printToDom);
+            });
+
+            let subscriptions = await page.evaluate(() => gaze.subscriptions);
+
+            expect(subscriptions.length).toBe(1)
+            expect(subscriptions[0].topics.length).toBe(0)
+        });
+
+        test('if subscription is not made if topics are not a list', async () => {
+            await page.evaluate(async () => {
+                await init();
+                await gaze.on(() => "1", printToDom);
+                await gaze.on(() => false, printToDom);
+                await gaze.on(() => {}, printToDom);
+                await gaze.on(() => 100, printToDom);
+            });
+
+            let subscriptions = await page.evaluate(() => gaze.subscriptions);
+
+            expect(subscriptions.length).toBe(4)
+            expect(subscriptions[0].topics.length).toBe(0)
+            expect(subscriptions[1].topics.length).toBe(0)
+            expect(subscriptions[2].topics.length).toBe(0)
+            expect(subscriptions[3].topics.length).toBe(0)
+        });
+
     })
 }

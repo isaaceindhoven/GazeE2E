@@ -105,7 +105,7 @@
             "source": {
                 "type": "git",
                 "url": "ssh://git@gitlab.isaac.local/study/php-chapter/real-time-ui-updates/gazehub.git",
-                "reference": "37afb3b75288ed853003769c13847869fede12bf"
+                "reference": "e2abafb60636778ae2834b0d1ae7256799d22c7a"
             },
             "default-branch": true,
             "bin": [
@@ -116,7 +116,7 @@
                 "proprietary"
             ],
             "description": "Gazehub",
-            "time": "2021-03-26T15:39:59+00:00"
+            "time": "2021-03-29T09:37:27+00:00"
         }
     ],
     "packages-dev": [],

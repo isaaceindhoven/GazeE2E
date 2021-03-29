@@ -61,10 +61,10 @@ for(let browserType of ['chromium', 'firefox', 'webkit']){
             await page.expectIncludesPayload({"name" : "patrik"}, true);
         });
 
-        test('if client updates subscription', async () => {
+        test('if client updates after on had empty array', async () => {
             await page.evaluate(async () => {
                 await init();
-                window.topics = ["event1"];
+                window.topics = [];
                 window.sub1 = await gaze.on(() => window.topics, printToDom);
                 window.topics = ["event2"];
                 await window.sub1.update()

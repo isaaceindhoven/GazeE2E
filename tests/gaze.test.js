@@ -119,7 +119,16 @@ for(let browserType of ['chromium', 'firefox', 'webkit']){
                 await gaze.on(() => ["event1", "event2"], printToDom);
             });
             await emit("event1", {"name" : "kevin"});
-            expect(await page.receivedHTML()).toBe(JSON.stringify({"name" : "kevin"}));
+            await page.expectIncludesPayload({"name" : "kevin"}, true);
+        });
+
+        test('if event name is case sensative', async () => {
+            await page.evaluate(async () => {
+                await init();
+                await gaze.on(() => ["Event1"], printToDom);
+            });
+            await emit("event1", {"name" : "kevin"});
+            await page.expectIncludesPayload({"name" : "kevin"}, false);
         });
 
     })

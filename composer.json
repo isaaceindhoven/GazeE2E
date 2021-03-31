@@ -1,11 +1,13 @@
 {
-    "name": "bader.ali/node-test",
-    "authors": [
-        {
-            "name": "Bader Ali",
-            "email": "bader.ali@isaac.nl"
-        }
-    ],
+    "name": "isaac/gazee2e",
+    "description": "E2E Tests for Gaze using all three libraries",
+    "authors": [],
+    "type": "project",
+    "license": "proprietary",
+    "minimum-stability": "stable",
+    "config": {
+        "sort-packages": true
+    },
     "repositories": [
         {
             "type": "vcs",
@@ -17,6 +19,7 @@
         }
     ],    
     "require": {
+        "php": "~7.3.0 || ~7.4.0 || ~8.0.0",
         "isaac/gaze" : "dev-master",
         "isaac/gazehub" : "dev-master"
     }

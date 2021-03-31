@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "732c29faff5ff04de445555eab713b8f",
+    "content-hash": "a437b5b279c1e06e254b4f2f695f4d14",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -105,7 +105,10 @@
             "source": {
                 "type": "git",
                 "url": "ssh://git@gitlab.isaac.local/study/php-chapter/real-time-ui-updates/gazehub.git",
-                "reference": "7d68fb2b6c10b16b8fca8c861737b1765b9012e4"
+                "reference": "7250e805223d9faa6a4c82d28db196c75bc85b67"
+            },
+            "require": {
+                "php": "~7.3.0 || ~7.4.0 || ~8.0.0"
             },
             "default-branch": true,
             "bin": [
@@ -116,7 +119,7 @@
                 "proprietary"
             ],
             "description": "Gazehub",
-            "time": "2021-03-29T12:11:51+00:00"
+            "time": "2021-03-31T13:02:51+00:00"
         }
     ],
     "packages-dev": [],
@@ -128,7 +131,9 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "~7.3.0 || ~7.4.0 || ~8.0.0"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"
 }

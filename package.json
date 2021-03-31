@@ -1,19 +1,18 @@
 {
-  "name": "test",
+  "name": "@isaac/gazee2e",
   "version": "1.0.0",
-  "description": "",
+  "description": "E2E Tests for Gaze using all three libraries",
   "main": "index.js",
   "scripts": {
     "test": "jest"
   },
   "author": "",
-  "license": "ISC",
+  "private": true,
+  "license": "proprietary",
   "dependencies": {
     "@study/gazejs": "git+ssh://git@gitlab.isaac.local/study/php-chapter/real-time-ui-updates/gazejs.git#master",
-    "node-fetch": "^2.6.1"
-  },
-  "devDependencies": {
     "jest": "^26.6.3",
+    "node-fetch": "^2.6.1",
     "playwright": "^1.10.0"
   }
 }

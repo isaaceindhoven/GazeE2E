@@ -20,6 +20,9 @@ async function openClientPage(browser){
     return page;
 }
 
+function pageTest(name, handler){
+    return {name, handler}
+}
 
 
-module.exports = { sleep, emit, openClientPage }
+module.exports = { sleep, emit, openClientPage, pageTest }

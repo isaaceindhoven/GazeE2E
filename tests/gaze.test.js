@@ -1,165 +1,122 @@
-const { emit, openClientPage } = require("./utils/helpers");
-const playwright = require('playwright');
-const { dockerUp, dockerKill } = require("./utils/DockerCompose")(process.cwd());
+const { emit, pageTest } = require("./utils/helpers");
+const { startTests } = require("./runner");
 
-jest.setTimeout(30 * 1000);
+startTests(['chromium', 'firefox', 'webkit'], [
 
-beforeAll(async () => {
-    await dockerUp("Server running on");
-}, 45 * 1000);
+    pageTest("if client receives payload", async page => {
+        await page.evaluate(async () => {
+            await gaze.on(() => ["event1"], printToDom)
+        });
+        await emit("event1", {"id" : 1});
+        await page.expectIncludesPayload({"id" : 1}, true);
+    }),
 
-afterAll(async () => {
-    await dockerKill();
-}, 45 * 1000);
-
-for(let browserType of ['chromium', 'firefox', 'webkit']){
-    describe(`Testing with browser ${browserType}`, () => {
-
-        let browser = null;
-        let page = null;
-
-        beforeAll(async () => {
-            browser = await playwright[browserType].launch({'headless' : true});
-        }, 45 * 1000);
-
-        beforeEach(async () => {
-            page = await openClientPage(browser);
-        })
-
-        afterEach(async () => {
-            for(let c of browser.contexts()){ 
-                await c.close() 
-            }
+    pageTest("if client updates subscription", async page => {
+        await page.evaluate(async () => {
+            window.topics = ["event1"];
+            window.sub1 = await gaze.on(() => window.topics, printToDom);
+            window.topics = ["event2"];
+            await window.sub1.update()
         });
 
-        afterAll(async () => { 
-            await browser.close() 
-        })
+        await emit("event1", {"name" : "kevin"});
+        await emit("event2", {"name" : "patrik"});
 
-        test('if client receives payload', async () => {
-            await page.evaluate(async () => {
-                await init();
-                await gaze.on(() => ["event1"], printToDom)
-            });
-            await emit("event1", {"id" : 1});
-            await page.expectIncludesPayload({"id" : 1}, true);
+        await page.expectIncludesPayload({"name" : "kevin"}, false);
+        await page.expectIncludesPayload({"name" : "patrik"}, true);
+    }),
+
+    pageTest('if client updates after on had empty array', async page => {
+        await page.evaluate(async () => {
+            window.topics = [];
+            window.sub1 = await gaze.on(() => window.topics, printToDom);
+            window.topics = ["event2"];
+            await window.sub1.update()
         });
 
-        test('if client updates subscription', async () => {
-            await page.evaluate(async () => {
-                await init();
-                window.topics = ["event1"];
-                window.sub1 = await gaze.on(() => window.topics, printToDom);
-                window.topics = ["event2"];
-                await window.sub1.update()
-            });
+        await emit("event1", {"name" : "kevin"});
+        await emit("event2", {"name" : "patrik"});
 
-            await emit("event1", {"name" : "kevin"});
-            await emit("event2", {"name" : "patrik"});
+        await page.expectIncludesPayload({"name" : "kevin"}, false);
+        await page.expectIncludesPayload({"name" : "patrik"}, true);
+    }),
 
-            await page.expectIncludesPayload({"name" : "kevin"}, false);
-            await page.expectIncludesPayload({"name" : "patrik"}, true);
+    pageTest('if client does not receive other events', async page => {
+        await page.evaluate(async () => {
+            await gaze.on(() => ["event2"], printToDom);
+        });
+        await emit("event1", {"name" : "kevin"});
+        await page.expectIncludesPayload({"name" : "kevin"}, false);
+    }),
+
+    pageTest('if public event is received', async page => {
+        await page.evaluate(async () => {
+            await init(["admin"]);
+            await gaze.on(() => ["event1"], printToDom);
+        });
+        await emit("event1", {"name" : "kevin"});
+        await page.expectIncludesPayload({"name" : "kevin"}, true);
+    }),
+
+    pageTest('if admin event is not received by guest', async page => {
+        await page.evaluate(async () => {
+            await gaze.on(() => ["event1"], printToDom);
+        });
+        await emit("event1", {"name" : "kevin"}, "admin");
+        await page.expectIncludesPayload({"name" : "kevin"}, false);
+    }),
+
+    pageTest('if admin event is received by admin role', async page => {
+        await page.evaluate(async () => {
+            await init(["admin"]);
+            await gaze.on(() => ["event1"], printToDom);
+        });
+        await emit("event1", {"name" : "kevin"}, "admin");
+        await page.expectIncludesPayload({"name" : "kevin"}, true);
+    }),
+
+    pageTest('if payload callback is called once', async page => {
+        await page.evaluate(async () => {
+            await gaze.on(() => ["event1", "event2"], printToDom);
+        });
+        await emit("event1", {"name" : "kevin"});
+        await page.expectIncludesPayload({"name" : "kevin"}, true);
+    }),
+
+    pageTest('if event name is case sensative', async page => {
+        await page.evaluate(async () => {
+            await gaze.on(() => ["Event1"], printToDom);
+        });
+        await emit("event1", {"name" : "kevin"});
+        await page.expectIncludesPayload({"name" : "kevin"}, false);
+    }),
+
+    pageTest('if subscription is made with empty values', async page => {
+        await page.evaluate(async () => {
+            await gaze.on(() => ["", null, undefined], printToDom);
         });
 
-        test('if client updates after on had empty array', async () => {
-            await page.evaluate(async () => {
-                await init();
-                window.topics = [];
-                window.sub1 = await gaze.on(() => window.topics, printToDom);
-                window.topics = ["event2"];
-                await window.sub1.update()
-            });
+        let subscriptions = await page.evaluate(() => gaze.subscriptions);
 
-            await emit("event1", {"name" : "kevin"});
-            await emit("event2", {"name" : "patrik"});
+        expect(subscriptions.length).toBe(1)
+        expect(subscriptions[0].topics.length).toBe(0)
+    }),
 
-            await page.expectIncludesPayload({"name" : "kevin"}, false);
-            await page.expectIncludesPayload({"name" : "patrik"}, true);
+    pageTest('if subscription is not made if topics are not a list', async page => {
+        await page.evaluate(async () => {
+            await gaze.on(() => "1", printToDom);
+            await gaze.on(() => false, printToDom);
+            await gaze.on(() => {}, printToDom);
+            await gaze.on(() => 100, printToDom);
         });
 
-        test('if client does not receive other events', async () => {
-            await page.evaluate(async () => {
-                await init();
-                await gaze.on(() => ["event2"], printToDom);
-            });
-            await emit("event1", {"name" : "kevin"});
-            await page.expectIncludesPayload({"name" : "kevin"}, false);
-        });
+        let subscriptions = await page.evaluate(() => gaze.subscriptions);
 
-        test('if public event is received', async () => {
-            await page.evaluate(async () => {
-                await init(["admin"]);
-                await gaze.on(() => ["event1"], printToDom);
-            });
-            await emit("event1", {"name" : "kevin"});
-            await page.expectIncludesPayload({"name" : "kevin"}, true);
-        });
+        expect(subscriptions.length).toBe(4)
+        expect(subscriptions[0].topics.length).toBe(0)
+        expect(subscriptions[1].topics.length).toBe(0)
+        expect(subscriptions[2].topics.length).toBe(0)
+        expect(subscriptions[3].topics.length).toBe(0)
+    }),
 
-        test('if admin event is not received by guest', async () => {
-            await page.evaluate(async () => {
-                await init();
-                await gaze.on(() => ["event1"], printToDom);
-            });
-            await emit("event1", {"name" : "kevin"}, "admin");
-            await page.expectIncludesPayload({"name" : "kevin"}, false);
-        });
-
-        test('if admin event is received by admin role', async () => {
-            await page.evaluate(async () => {
-                await init(["admin"]);
-                await gaze.on(() => ["event1"], printToDom);
-            });
-            await emit("event1", {"name" : "kevin"}, "admin");
-            await page.expectIncludesPayload({"name" : "kevin"}, true);
-        });
-
-        test('if payload callback is called once', async () => {
-            await page.evaluate(async () => {
-                await init();
-                await gaze.on(() => ["event1", "event2"], printToDom);
-            });
-            await emit("event1", {"name" : "kevin"});
-            await page.expectIncludesPayload({"name" : "kevin"}, true);
-        });
-
-        test('if event name is case sensative', async () => {
-            await page.evaluate(async () => {
-                await init();
-                await gaze.on(() => ["Event1"], printToDom);
-            });
-            await emit("event1", {"name" : "kevin"});
-            await page.expectIncludesPayload({"name" : "kevin"}, false);
-        });
-
-        test('if subscription is made with empty values', async () => {
-            await page.evaluate(async () => {
-                await init();
-                await gaze.on(() => ["", null, undefined], printToDom);
-            });
-
-            let subscriptions = await page.evaluate(() => gaze.subscriptions);
-
-            expect(subscriptions.length).toBe(1)
-            expect(subscriptions[0].topics.length).toBe(0)
-        });
-
-        test('if subscription is not made if topics are not a list', async () => {
-            await page.evaluate(async () => {
-                await init();
-                await gaze.on(() => "1", printToDom);
-                await gaze.on(() => false, printToDom);
-                await gaze.on(() => {}, printToDom);
-                await gaze.on(() => 100, printToDom);
-            });
-
-            let subscriptions = await page.evaluate(() => gaze.subscriptions);
-
-            expect(subscriptions.length).toBe(4)
-            expect(subscriptions[0].topics.length).toBe(0)
-            expect(subscriptions[1].topics.length).toBe(0)
-            expect(subscriptions[2].topics.length).toBe(0)
-            expect(subscriptions[3].topics.length).toBe(0)
-        });
-
-    })
-}
+]);

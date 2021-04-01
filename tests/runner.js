@@ -1,51 +1,62 @@
-const { openClientPage } = require("./utils/helpers");
-const playwright = require('playwright');
-const { dockerUp, dockerKill } = require("./utils/DockerCompose")(process.cwd());
+const { openClientPage } = require("./utils/helpers")
+const playwright = require('playwright')
+const { dockerUp, dockerKill } = require("./utils/DockerCompose")(process.cwd())
+
+function filterOnly(arr){
+    if (arr.some(t => t.name.includes("only:"))){
+        arr = arr.filter(t => t.name.includes("only:"))
+    }
+    return arr
+}
 
 function startTests(browsers, tests){
 
-    jest.setTimeout(30 * 1000);
+    if (browsers.some(b => b.includes("only:"))){
+        browsers = browsers.filter(b => b.includes("only:")).map(b => b.replace("only:", ""))
+    }
+
+    jest.setTimeout(30 * 1000)
 
     beforeAll(async () => {
-        await dockerUp("Server running on");
-    }, 45 * 1000);
+        await dockerUp("Server running on")
+    }, 45 * 1000)
 
     afterAll(async () => {
-        await dockerKill();
-    }, 45 * 1000);
+        await dockerKill()
+    }, 45 * 1000)
 
     for(let browserType of browsers){
         describe(`Testing with browser ${browserType}`, () => {
     
-            let browser = null;
-            let page = null;
+            let browser = null
+            let page = null
     
             beforeAll(async () => {
-                browser = await playwright[browserType].launch({'headless' : true});
-            }, 45 * 1000);
+                browser = await playwright[browserType].launch({'headless' : true})
+            }, 45 * 1000)
     
             beforeEach(async () => {
-                page = await openClientPage(browser);
-                await page.evaluate(async () => await init());
+                page = await openClientPage(browser)
+                await page.evaluate(async () => await init())
             })
     
             afterEach(async () => {
                 for(let c of browser.contexts()){ 
                     await c.close() 
                 }
-            });
+            })
     
             afterAll(async () => { 
                 await browser.close() 
-            });
+            })
 
             if (tests.some(t => t.name.includes("only:"))){
                 tests = tests.filter(t => t.name.includes("only:"))
             }
 
             tests.forEach(t => {
-                test(t.name, async () => await t.handler(page));
-            });
+                test(t.name, async () => await t.handler(page))
+            })
     
         })
     }

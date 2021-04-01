@@ -96,7 +96,7 @@ startTests(['chromium', 'firefox', 'webkit'], [
             await gaze.on(() => ["", null, undefined], printToDom)
         })
 
-        let subscriptions = await page.evaluate(() => gaze.subscriptions)
+        let subscriptions = await page.evaluate(() => gaze.subscriptions.getAll())
 
         expect(subscriptions.length).toBe(1)
         expect(subscriptions[0].topics.length).toBe(0)
@@ -109,7 +109,7 @@ startTests(['chromium', 'firefox', 'webkit'], [
             await gaze.on(() => 100, printToDom)
         })
 
-        let subscriptions = await page.evaluate(() => gaze.subscriptions)
+        let subscriptions = await page.evaluate(() => gaze.subscriptions.getAll())
 
         expect(subscriptions.length).toBe(3)
         expect(subscriptions[0].topics.length).toBe(0)

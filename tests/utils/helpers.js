@@ -10,13 +10,15 @@ async function emit(event, payload, role = ""){
 async function openClientPage(browser){
     const page = await browser.newPage();
     await page.goto('http://localhost:8000/');
-    page.expectIncludesPayload = async (payload, assertion) => {
+
+    page.see = async (content) => {
         let bodyHTML = await page.evaluate(() => document.body.innerHTML);
-        expect(bodyHTML.includes(JSON.stringify(payload))).toBe(assertion);
+        return bodyHTML.includes(JSON.stringify(content));
     }
-    page.receivedHTML = async () => {
-        return await page.evaluate(() => document.querySelector("#received").innerHTML);
-    }
+
+    page.assertSee = async (content) => expect(await page.see(content)).toBe(true);
+    page.assertDontSee = async (content) => expect(await page.see(content)).toBe(false);
+
     return page;
 }
 

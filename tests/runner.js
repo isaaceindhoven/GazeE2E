@@ -39,6 +39,10 @@ function startTests(browsers, tests){
                 await browser.close() 
             });
 
+            if (tests.some(t => t.name.includes("only:"))){
+                tests = tests.filter(t => t.name.includes("only:"))
+            }
+
             tests.forEach(t => {
                 test(t.name, async () => await t.handler(page));
             });

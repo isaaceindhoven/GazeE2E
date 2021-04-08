@@ -11,7 +11,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "ssh://git@gitlab.isaac.local/study/php-chapter/real-time-ui-updates/gazephp.git"
+            "url": "ssh://git@gitlab.isaac.local/study/php-chapter/real-time-ui-updates/gazepublisher.git"
         },
         {
             "type": "vcs",
@@ -20,7 +20,7 @@
     ],    
     "require": {
         "php": "~7.3.0 || ~7.4.0 || ~8.0.0",
-        "isaac/gaze" : "dev-master",
+        "isaac/gazepublisher" : "dev-master",
         "isaac/gazehub" : "dev-master"
     }
 }

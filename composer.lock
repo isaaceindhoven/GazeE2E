@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a437b5b279c1e06e254b4f2f695f4d14",
+    "content-hash": "e33fe901e417b38b4c4ec6c1d3029eba",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -61,12 +61,34 @@
             "time": "2021-02-12T00:02:00+00:00"
         },
         {
-            "name": "isaac/gaze",
+            "name": "isaac/gazehub",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "ssh://git@gitlab.isaac.local/study/php-chapter/real-time-ui-updates/gazephp.git",
-                "reference": "f536840e0f4c04d3414457e998ef605387fc4822"
+                "url": "ssh://git@gitlab.isaac.local/study/php-chapter/real-time-ui-updates/gazehub.git",
+                "reference": "79242d924da83aae00188f1ecad3824552dde611"
+            },
+            "require": {
+                "php": "~7.3.0 || ~7.4.0 || ~8.0.0"
+            },
+            "default-branch": true,
+            "bin": [
+                "gazehub"
+            ],
+            "type": "library",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Gazehub",
+            "time": "2021-04-08T12:01:03+00:00"
+        },
+        {
+            "name": "isaac/gazepublisher",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "ssh://git@gitlab.isaac.local/study/php-chapter/real-time-ui-updates/gazepublisher.git",
+                "reference": "985c4bdf35c0e2243cbac026e3bec6498999faaf"
             },
             "require": {
                 "ext-curl": "*",
@@ -80,7 +102,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "GazePHP\\": "src/"
+                    "ISAAC\\GazePublisher\\": "src/"
                 }
             },
             "license": [
@@ -97,36 +119,14 @@
                 }
             ],
             "description": "Client library for GazeHub",
-            "time": "2021-03-23T10:05:59+00:00"
-        },
-        {
-            "name": "isaac/gazehub",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "ssh://git@gitlab.isaac.local/study/php-chapter/real-time-ui-updates/gazehub.git",
-                "reference": "7250e805223d9faa6a4c82d28db196c75bc85b67"
-            },
-            "require": {
-                "php": "~7.3.0 || ~7.4.0 || ~8.0.0"
-            },
-            "default-branch": true,
-            "bin": [
-                "gazehub.phar"
-            ],
-            "type": "library",
-            "license": [
-                "proprietary"
-            ],
-            "description": "Gazehub",
-            "time": "2021-03-31T13:02:51+00:00"
+            "time": "2021-04-08T12:02:50+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "isaac/gaze": 20,
+        "isaac/gazepublisher": 20,
         "isaac/gazehub": 20
     },
     "prefer-stable": false,

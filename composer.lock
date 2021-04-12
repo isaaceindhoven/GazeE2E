@@ -66,21 +66,21 @@
             "source": {
                 "type": "git",
                 "url": "ssh://git@gitlab.isaac.local/study/php-chapter/real-time-ui-updates/gazehub.git",
-                "reference": "8f90b39f181945709e24451362d37b3320bae613"
+                "reference": "63810b74f6d647a10848fe2298ca434444b7d2aa"
             },
             "require": {
                 "php": "~7.3.0 || ~7.4.0 || ~8.0.0"
             },
             "default-branch": true,
             "bin": [
-                "gazehub.phar"
+                "gazehub"
             ],
             "type": "library",
             "license": [
                 "proprietary"
             ],
             "description": "Gazehub",
-            "time": "2021-04-08T14:16:41+00:00"
+            "time": "2021-04-09T07:05:16+00:00"
         },
         {
             "name": "isaac/gazepublisher",

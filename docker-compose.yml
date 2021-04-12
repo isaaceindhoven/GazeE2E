@@ -7,7 +7,7 @@ services:
       - 8000:80
     volumes:
       - ./client:/usr/local/apache2/htdocs
-      - ./node_modules/@study/gazejs/dist:/usr/local/apache2/htdocs/js
+      - ./node_modules/@study/gazeclient/dist:/usr/local/apache2/htdocs/js
   server:
     image: php:${PHP_VER:-7.3}-apache
     ports:

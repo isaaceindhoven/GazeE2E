@@ -146,4 +146,84 @@ startTests(['chromium', 'firefox', 'webkit'], [
         await page.assertSee({"name" : "Type3"})
     }),
 
+    pageTest('if single middleware works with payload change', async page => {
+        await page.evaluate(async () => {
+
+            gaze.addMiddleware((payload, next) => {
+                payload.name = "Bob";
+                next(payload);
+            });
+
+            await gaze.on("new_names", printToDom)
+        })
+
+        await emit("new_names", {"name" : "Kevin"})
+
+        await page.assertSee({"name" : "Bob"})
+    }),
+
+    pageTest('if multiple middlewares work with payload changes', async page => {
+        await page.evaluate(async () => {
+
+            gaze.addMiddleware((payload, next) => {
+                payload.name += " is";
+                next(payload);
+            });
+
+            gaze.addMiddleware((payload, next) => {
+                payload.name += " a";
+                next(payload);
+            });
+
+            gaze.addMiddleware((payload, next) => {
+                payload.name += " cool dude";
+                next(payload);
+            });
+
+            await gaze.on("new_names", printToDom)
+        })
+
+        await emit("new_names", {"name" : "Kevin"})
+
+        await page.assertSee({"name" : "Kevin is a cool dude"})
+    }),
+
+    pageTest('if middleware chain stops if next is not called', async page => {
+        await page.evaluate(async () => {
+
+            gaze.addMiddleware((payload, next) => {
+                if (payload.name === "Bob") return;
+                next(payload);
+            });
+
+            await gaze.on("new_names", printToDom)
+        })
+
+        await emit("new_names", {"name" : "Kevin"})
+        await emit("new_names", {"name" : "Bob"})
+
+        await page.assertSee({"name" : "Kevin"})
+        await page.assertDontSee({"name" : "Bob"})
+    }),
+
+    pageTest('if gaze does not break when middlewares throws', async page => {
+        await page.evaluate(async () => {
+
+            gaze.addMiddleware((payload, next) => {
+                if (payload.name === "Bob"){
+                    throw "I dont like him";
+                }
+                next(payload);
+            });
+
+            await gaze.on("new_names", printToDom)
+        })
+
+        await emit("new_names", {"name" : "Bob"})
+        await emit("new_names", {"name" : "Kevin"})
+
+        await page.assertDontSee({"name" : "Bob"})
+        await page.assertSee({"name" : "Kevin"})
+    }),
+
 ])

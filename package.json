@@ -4,7 +4,7 @@
   "description": "E2E Tests for Gaze using all three libraries",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --bail"
   },
   "author": "",
   "private": true,

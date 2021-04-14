@@ -13,7 +13,7 @@ $event = $_GET["event"];
 $payload = json_decode($_GET["payload"]);
 $role = $_GET["role"] ?? null;
 
-$gaze = new Gaze("http://hub:3333", __DIR__ . "/private.key");
+$gaze = new Gaze("http://hub:3333", file_get_contents(__DIR__ . "/private.key"));
 $gaze->emit($event, $payload, $role);
 
 echo json_encode(["status" => "send"]);

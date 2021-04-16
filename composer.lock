@@ -66,7 +66,7 @@
             "source": {
                 "type": "git",
                 "url": "ssh://git@gitlab.isaac.local/study/php-chapter/real-time-ui-updates/gazehub.git",
-                "reference": "63810b74f6d647a10848fe2298ca434444b7d2aa"
+                "reference": "2b95efe8f1e20eb6e707304ef1b4cfaf3be8f9a9"
             },
             "require": {
                 "php": "~7.3.0 || ~7.4.0 || ~8.0.0"
@@ -80,7 +80,7 @@
                 "proprietary"
             ],
             "description": "Gazehub",
-            "time": "2021-04-09T07:05:16+00:00"
+            "time": "2021-04-16T08:12:17+00:00"
         },
         {
             "name": "isaac/gazepublisher",
@@ -88,7 +88,7 @@
             "source": {
                 "type": "git",
                 "url": "ssh://git@gitlab.isaac.local/study/php-chapter/real-time-ui-updates/gazepublisher.git",
-                "reference": "6f8c738e1ec4fdc872c3e88d10bc8c741864a348"
+                "reference": "5937038f3f1de9bac01832bfb274244a8b12793d"
             },
             "require": {
                 "ext-curl": "*",
@@ -120,7 +120,7 @@
                 }
             ],
             "description": "Client library for GazeHub",
-            "time": "2021-04-14T12:25:53+00:00"
+            "time": "2021-04-14T12:42:23+00:00"
         }
     ],
     "packages-dev": [],

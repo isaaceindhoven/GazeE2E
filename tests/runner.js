@@ -1,24 +1,26 @@
-const { openClientPage } = require("./utils/helpers")
-const playwright = require('playwright')
-const { dockerUp, dockerKill } = require("./utils/DockerCompose")(process.cwd())
+/**
+  *   Do not remove or alter the notices in this preamble.
+  *   This software code regards ISAAC Standard Software.
+  *   Copyright © 2021 ISAAC and/or its affiliates.
+  *   www.isaac.nl All rights reserved. License grant and user rights and obligations
+  *   according to applicable license agreement. Please contact sales@isaac.nl for
+  *   questions regarding license and user rights.
+  */
 
-function filterOnly(arr){
-    if (arr.some(t => t.name.includes("only:"))){
-        arr = arr.filter(t => t.name.includes("only:"))
-    }
-    return arr
-}
+const { openClientPage } = require('./utils/helpers')
+const playwright = require('playwright')
+const { dockerUp, dockerKill } = require('./utils/DockerCompose')(process.cwd())
 
 function startTests(browsers, tests){
 
-    if (browsers.some(b => b.includes("only:"))){
-        browsers = browsers.filter(b => b.includes("only:")).map(b => b.replace("only:", ""))
+    if (browsers.some(b => b.includes('only:'))){
+        browsers = browsers.filter(b => b.includes('only:')).map(b => b.replace('only:', ''))
     }
 
     jest.setTimeout(30 * 1000)
 
     beforeAll(async () => {
-        await dockerUp("Server running on")
+        await dockerUp('Server running on')
     }, 45 * 1000)
 
     afterAll(async () => {
@@ -50,8 +52,8 @@ function startTests(browsers, tests){
                 await browser.close() 
             })
 
-            if (tests.some(t => t.name.includes("only:"))){
-                tests = tests.filter(t => t.name.includes("only:"))
+            if (tests.some(t => t.name.includes('only:'))){
+                tests = tests.filter(t => t.name.includes('only:'))
             }
 
             tests.forEach(t => {

@@ -157,7 +157,7 @@
             "source": {
                 "type": "git",
                 "url": "ssh://git@gitlab.isaac.local/study/php-chapter/real-time-ui-updates/gazepublisher.git",
-                "reference": "3a02251c2823a76ee82646154d48b657bbff0646"
+                "reference": "daf6341654c16c535e5720fe78b478f733f4c725"
             },
             "require": {
                 "ext-curl": "*",
@@ -193,7 +193,7 @@
                 }
             ],
             "description": "Publish library for GazeHub",
-            "time": "2021-04-23T08:53:20+00:00"
+            "time": "2021-04-29T12:27:29+00:00"
         },
         {
             "name": "myclabs/deep-copy",

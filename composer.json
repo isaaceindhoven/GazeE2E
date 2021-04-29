@@ -20,7 +20,7 @@
     ],    
     "require": {
         "php": "~7.3.0 || ~7.4.0 || ~8.0.0",
-        "isaac/gazepublisher" : "dev-master",
-        "isaac/gazehub" : "dev-master"
+        "isaac/gaze-publisher" : "dev-master",
+        "isaac/gaze-hub" : "dev-master"
     }
 }

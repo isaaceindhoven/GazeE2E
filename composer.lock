@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e33fe901e417b38b4c4ec6c1d3029eba",
+    "content-hash": "165c7623a6732d26aa44374746ceccd1",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -130,12 +130,12 @@
             "time": "2021-02-12T00:02:00+00:00"
         },
         {
-            "name": "isaac/gazehub",
+            "name": "isaac/gaze-hub",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "ssh://git@gitlab.isaac.local/study/php-chapter/real-time-ui-updates/gazehub.git",
-                "reference": "851a6ee17f57c411ea28731870a389127c8ad878"
+                "reference": "eb89cfc6f6ec0d1e93fb3ee53abc8934e4aea2f2"
             },
             "require": {
                 "php": "~7.3.0 || ~7.4.0 || ~8.0.0"
@@ -149,15 +149,15 @@
                 "proprietary"
             ],
             "description": "Gazehub",
-            "time": "2021-04-20T12:08:06+00:00"
+            "time": "2021-04-29T08:04:13+00:00"
         },
         {
-            "name": "isaac/gazepublisher",
+            "name": "isaac/gaze-publisher",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "ssh://git@gitlab.isaac.local/study/php-chapter/real-time-ui-updates/gazepublisher.git",
-                "reference": "93152a60b8b2ff5a8286ee31735331d91efe3b22"
+                "reference": "3a02251c2823a76ee82646154d48b657bbff0646"
             },
             "require": {
                 "ext-curl": "*",
@@ -193,7 +193,7 @@
                 }
             ],
             "description": "Publish library for GazeHub",
-            "time": "2021-04-22T11:13:29+00:00"
+            "time": "2021-04-23T08:53:20+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2222,8 +2222,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "isaac/gazepublisher": 20,
-        "isaac/gazehub": 20
+        "isaac/gaze-publisher": 20,
+        "isaac/gaze-hub": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

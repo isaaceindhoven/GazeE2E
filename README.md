@@ -1,6 +1,6 @@
 # Gaze E2E Test
  
-This repository runs a full E2E test using the 3 Gaze libraries (GazeHub, GazePHP and GazeJS)
+This repository runs a full E2E test using the 3 [Gaze](https://isaaceindhoven.github.io/GazeHub/docs/) libraries ([GazeHub](https://github.com/isaaceindhoven/GazeHub), [GazePublisher](https://github.com/isaaceindhoven/GazePublisher) and [GazeClient](https://github.com/isaaceindhoven/GazeClient))
  
 ## How it works
  

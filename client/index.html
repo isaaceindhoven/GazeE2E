@@ -23,7 +23,9 @@
         async function init(roles = []){
             let req = await fetch("http://localhost:8001/token.php?roles=" + JSON.stringify(roles));
             let data = await req.json();
-            gaze = await new GazeClient("http://localhost:3333", data.token).connect();
+            gaze = new GazeClient("http://localhost:3333");
+            await gaze.connect();
+            await gaze.setToken(data.token)
         }
     </script>
     

@@ -62,16 +62,16 @@
         },
         {
             "name": "isaac/gaze-hub",
-            "version": "v0.1.0",
+            "version": "v0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/isaaceindhoven/GazeHub.git",
-                "reference": "ddecef96b811176a47636bde6014bda57129e59d"
+                "reference": "03a8413a62056d4c33015edaf22ad71bcf3c3d87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/isaaceindhoven/GazeHub/zipball/ddecef96b811176a47636bde6014bda57129e59d",
-                "reference": "ddecef96b811176a47636bde6014bda57129e59d",
+                "url": "https://api.github.com/repos/isaaceindhoven/GazeHub/zipball/03a8413a62056d4c33015edaf22ad71bcf3c3d87",
+                "reference": "03a8413a62056d4c33015edaf22ad71bcf3c3d87",
                 "shasum": ""
             },
             "require": {
@@ -88,9 +88,9 @@
             "description": "Gazehub",
             "support": {
                 "issues": "https://github.com/isaaceindhoven/GazeHub/issues",
-                "source": "https://github.com/isaaceindhoven/GazeHub/tree/v0.1.0"
+                "source": "https://github.com/isaaceindhoven/GazeHub/tree/v0.1.2"
             },
-            "time": "2021-04-30T08:26:03+00:00"
+            "time": "2021-05-06T12:56:57+00:00"
         },
         {
             "name": "isaac/gaze-publisher",

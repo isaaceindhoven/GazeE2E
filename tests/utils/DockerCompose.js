@@ -23,7 +23,7 @@ function dockerUp(readyText) {
         await execAsync(`cd ${dirname} && docker-compose down`);
         await execAsync(`cd ${dirname} && docker-compose rm`);
 
-        const cmd = spawn('docker-compose', ['up'], { cwd: dirname });
+        const cmd = spawn('docker-compose', ['up'], { 'cwd': dirname });
         cmd.stdout.on('data', function (data) {
             if (data.toString().includes(readyText)) {
                 res();

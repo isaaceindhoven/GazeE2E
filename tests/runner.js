@@ -2,6 +2,8 @@ const { openClientPage } = require('./utils/helpers')
 const playwright = require('playwright')
 const { dockerUp, dockerKill } = require('./utils/DockerCompose')(process.cwd())
 
+require('dotenv').config()
+
 function startTests(browsers, tests){
 
     if (browsers.some(b => b.includes('only:'))){

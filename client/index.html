@@ -25,7 +25,7 @@
             let data = await req.json();
             gaze = new GazeClient("http://localhost:3333");
             await gaze.connect();
-            await gaze.setToken(data.token)
+            await gaze.authenticate(data.token)
         }
     </script>
     

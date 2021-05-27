@@ -20,12 +20,14 @@
             document.querySelector("#received").innerHTML += `${JSON.stringify(p)}`;
         }
 
-        async function init(roles = []){
-            let req = await fetch("http://localhost:8001/token.php?roles=" + JSON.stringify(roles));
-            let data = await req.json();
+        async function init(roles = []) {
             gaze = new GazeClient("http://localhost:3333");
             await gaze.connect();
-            await gaze.authenticate(data.token)
+            if (roles.length > 0) {
+                let req = await fetch("http://localhost:8001/token.php?roles=" + JSON.stringify(roles));
+                let data = await req.json();
+                await gaze.authenticate(data.token)
+            }
         }
     </script>
     

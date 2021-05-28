@@ -14,7 +14,7 @@ async function openClientPage(browser){
     page.see = async (content) => {
         let bodyHTML = await page.evaluate(() => document.body.innerHTML);
         return bodyHTML.includes(JSON.stringify(content));
-    }
+    };
 
     page.assertSee = async (content) => expect(await page.see(content)).toBe(true);
     page.assertDontSee = async (content) => expect(await page.see(content)).toBe(false);
@@ -27,4 +27,4 @@ function pageTest(name, handler){
 }
 
 
-module.exports = { sleep, emit, openClientPage, pageTest }
+module.exports = { sleep, emit, openClientPage, pageTest };
